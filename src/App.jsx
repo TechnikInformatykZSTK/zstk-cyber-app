@@ -1,8 +1,38 @@
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Shield, Code2, Database, Globe, Lock, Terminal, Bug, Cpu, CheckCircle2, AlertTriangle, Trophy, Play, RefreshCw, ArrowRight, Sparkles } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import {
+  Shield,
+  Code2,
+  Database,
+  Globe,
+  Lock,
+  Terminal,
+  Bug,
+  Cpu,
+  CheckCircle2,
+  AlertTriangle,
+  Trophy,
+  Play,
+  RefreshCw,
+  ArrowRight,
+  Sparkles,
+} from "lucide-react";
+
+function Card({ className = "", children }) {
+  return <div className={className}>{children}</div>;
+}
+
+function CardContent({ className = "", children }) {
+  return <div className={className}>{children}</div>;
+}
+
+function Button({ className = "", children, ...props }) {
+  return (
+    <button type="button" className={className} {...props}>
+      {children}
+    </button>
+  );
+}
 
 const modules = [
   {
@@ -79,17 +109,32 @@ const threats = [
 const quiz = [
   {
     question: "Użytkownik wpisuje dane w formularzu kontaktowym. Co powinien zrobić programista przed zapisaniem ich do bazy?",
-    answers: ["Zapisać wszystko bez sprawdzania, bo formularz jest na stronie", "Sprawdzić poprawność danych i ograniczyć niebezpieczne znaki", "Ukryć formularz po kliknięciu przycisku", "Zmienić wygląd pola tekstowego, żeby wyglądało bezpiecznie"],
+    answers: [
+      "Zapisać wszystko bez sprawdzania, bo formularz jest na stronie",
+      "Sprawdzić poprawność danych i ograniczyć niebezpieczne znaki",
+      "Ukryć formularz po kliknięciu przycisku",
+      "Zmienić wygląd pola tekstowego, żeby wyglądało bezpiecznie",
+    ],
     correct: 1,
   },
   {
     question: "Uczeń otrzymuje link do „darmowej nagrody”, który prowadzi do dziwnej domeny. Co najlepiej pokazuje pracę cyberbezpieczeństwa?",
-    answers: ["Ocena, czy grafika w wiadomości jest estetyczna", "Kliknięcie linku, żeby szybciej zobaczyć nagrodę", "Sprawdzenie adresu strony, treści wiadomości i ryzyka phishingu", "Przesłanie linku wszystkim znajomym do testu"],
+    answers: [
+      "Ocena, czy grafika w wiadomości jest estetyczna",
+      "Kliknięcie linku, żeby szybciej zobaczyć nagrodę",
+      "Sprawdzenie adresu strony, treści wiadomości i ryzyka phishingu",
+      "Przesłanie linku wszystkim znajomym do testu",
+    ],
     correct: 2,
   },
   {
     question: "Aplikacja ma wyświetlić listę uczniów zapisanych w bazie. Która technologia będzie tu najbardziej potrzebna?",
-    answers: ["CSS, bo szyfruje dane w bazie", "PNG, bo przechowuje hasła użytkowników", "Bluetooth, bo sortuje rekordy w tabeli", "SQL, bo pozwala pobierać i filtrować dane z tabel"],
+    answers: [
+      "CSS, bo szyfruje dane w bazie",
+      "PNG, bo przechowuje hasła użytkowników",
+      "Bluetooth, bo sortuje rekordy w tabeli",
+      "SQL, bo pozwala pobierać i filtrować dane z tabel",
+    ],
     correct: 3,
   },
 ];
@@ -131,9 +176,31 @@ function calculatePasswordScore(password) {
 }
 
 function passwordMessage(score) {
-  if (score <= 2) return { label: "Słabe", text: "Takie hasło można łatwo odgadnąć lub złamać.", width: "25%", tone: "text-rose-200", bg: "bg-rose-500" };
-  if (score <= 4) return { label: "Średnie", text: "Jest lepiej, ale warto dodać długość i znaki specjalne.", width: "60%", tone: "text-amber-200", bg: "bg-amber-400" };
-  return { label: "Mocne", text: "Długie, różnorodne hasło jest dużo trudniejsze do złamania.", width: "95%", tone: "text-emerald-200", bg: "bg-emerald-400" };
+  if (score <= 2) {
+    return {
+      label: "Słabe",
+      text: "Takie hasło można łatwo odgadnąć lub złamać.",
+      width: "25%",
+      tone: "text-rose-200",
+      bg: "bg-rose-500",
+    };
+  }
+  if (score <= 4) {
+    return {
+      label: "Średnie",
+      text: "Jest lepiej, ale warto dodać długość i znaki specjalne.",
+      width: "60%",
+      tone: "text-amber-200",
+      bg: "bg-amber-400",
+    };
+  }
+  return {
+    label: "Mocne",
+    text: "Długie, różnorodne hasło jest dużo trudniejsze do złamania.",
+    width: "95%",
+    tone: "text-emerald-200",
+    bg: "bg-emerald-400",
+  };
 }
 
 function SectionTitle({ icon: Icon, title, subtitle }) {
@@ -165,7 +232,8 @@ export default function CyberInformatykShowcase() {
     return quiz.reduce((sum, item, index) => sum + (answers[index] === item.correct ? 1 : 0), 0);
   }, [answers]);
 
-  const isWorkflowCorrect = workflowOrder.length === correctWorkflow.length && workflowOrder.every((id, index) => id === correctWorkflow[index]);
+  const isWorkflowCorrect =
+    workflowOrder.length === correctWorkflow.length && workflowOrder.every((id, index) => id === correctWorkflow[index]);
 
   function addWorkflowStep(id) {
     if (workflowOrder.includes(id)) return;
@@ -201,21 +269,26 @@ export default function CyberInformatykShowcase() {
               <Sparkles size={18} /> ZSTK Lublin — interaktywny pokaz kierunków
             </div>
             <h1 className="text-4xl md:text-7xl font-black leading-[1.02] tracking-tight">
-              Cyberbezpieczeństwo <span className="text-cyan-300">+</span><br /> Informatyka
+              Cyberbezpieczeństwo <span className="text-cyan-300">+</span>
+              <br /> Informatyka
             </h1>
             <p className="text-slate-200 text-lg md:text-2xl mt-5 max-w-4xl leading-relaxed">
-              Jedna aplikacja pokazuje dwie ścieżki: <b className="text-white">informatyk tworzy rozwiązania</b>, a <b className="text-white">cyberbezpieczeństwo sprawdza, czy są bezpieczne</b>.
+              Jedna aplikacja pokazuje dwie ścieżki: <b className="text-white">informatyk tworzy rozwiązania</b>, a{" "}
+              <b className="text-white">cyberbezpieczeństwo sprawdza, czy są bezpieczne</b>.
             </p>
             <div className="flex flex-wrap gap-3 mt-7">
-              {['programowanie', 'bazy danych', 'formularze', 'hasła', 'phishing', 'ochrona danych'].map((tag) => (
-                <span key={tag} className="px-4 py-2 rounded-full bg-slate-900/70 border border-white/10 text-slate-100 text-sm md:text-base font-medium">
+              {["programowanie", "bazy danych", "formularze", "hasła", "phishing", "ochrona danych"].map((tag) => (
+                <span
+                  key={tag}
+                  className="px-4 py-2 rounded-full bg-slate-900/70 border border-white/10 text-slate-100 text-sm md:text-base font-medium"
+                >
                   #{tag}
                 </span>
               ))}
             </div>
           </div>
 
-          <Card className="bg-black/55 border-cyan-300/25 shadow-2xl rounded-[2rem] overflow-hidden">
+          <Card className="bg-black/55 border border-cyan-300/25 shadow-2xl rounded-[2rem] overflow-hidden">
             <CardContent className="p-0">
               <div className="flex items-center gap-2 px-5 py-4 bg-slate-900 border-b border-white/10">
                 <span className="w-3 h-3 rounded-full bg-rose-400" />
@@ -225,7 +298,13 @@ export default function CyberInformatykShowcase() {
               </div>
               <div className="p-6 font-mono text-base md:text-lg text-green-300 space-y-4 min-h-[260px] flex flex-col justify-center">
                 {terminalLines.map((line, index) => (
-                  <motion.div key={line} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: index * 0.35 }} className="leading-relaxed">
+                  <motion.div
+                    key={line}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: index * 0.35 }}
+                    className="leading-relaxed"
+                  >
                     {line}
                   </motion.div>
                 ))}
@@ -236,7 +315,7 @@ export default function CyberInformatykShowcase() {
 
         <section className="grid md:grid-cols-3 gap-5">
           {steps.map((step) => (
-            <Card key={step.number} className="bg-white/[0.08] border-white/12 rounded-[1.7rem] shadow-xl backdrop-blur">
+            <Card key={step.number} className="bg-white/[0.08] border border-white/12 rounded-[1.7rem] shadow-xl backdrop-blur">
               <CardContent className="p-6 space-y-3">
                 <div className="text-4xl font-black text-cyan-300">{step.number}</div>
                 <h2 className="text-2xl font-black text-white leading-tight">{step.title}</h2>
@@ -247,96 +326,139 @@ export default function CyberInformatykShowcase() {
         </section>
 
         <section>
-          <SectionTitle icon={Cpu} title="Co pokazuje ta aplikacja?" subtitle="Cztery krótkie obszary, które kandydat może szybko skojarzyć z nauką na kierunkach technicznych." />
+          <SectionTitle
+            icon={Cpu}
+            title="Co pokazuje ta aplikacja?"
+            subtitle="Cztery krótkie obszary, które kandydat może szybko skojarzyć z nauką na kierunkach technicznych."
+          />
           <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-5">
-          {modules.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <motion.div key={item.title} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.08 }}>
-                <Card className="h-full bg-white/[0.08] border-white/12 rounded-[1.7rem] hover:bg-white/[0.12] transition shadow-xl backdrop-blur overflow-hidden">
-                  <CardContent className="p-6 space-y-5">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="w-14 h-14 rounded-2xl bg-cyan-400/15 border border-cyan-300/30 flex items-center justify-center text-cyan-200 shadow-lg shadow-cyan-500/10">
-                        <Icon size={30} />
+            {modules.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <motion.div key={item.title} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.08 }}>
+                  <Card className="h-full bg-white/[0.08] border border-white/12 rounded-[1.7rem] hover:bg-white/[0.12] transition shadow-xl backdrop-blur overflow-hidden">
+                    <CardContent className="p-6 space-y-5">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="w-14 h-14 rounded-2xl bg-cyan-400/15 border border-cyan-300/30 flex items-center justify-center text-cyan-200 shadow-lg shadow-cyan-500/10">
+                          <Icon size={30} />
+                        </div>
+                        <span className="text-[11px] md:text-xs uppercase tracking-wider text-cyan-100 bg-cyan-400/10 border border-cyan-300/20 px-3 py-1.5 rounded-full font-bold text-right">
+                          {item.role}
+                        </span>
                       </div>
-                      <span className="text-[11px] md:text-xs uppercase tracking-wider text-cyan-100 bg-cyan-400/10 border border-cyan-300/20 px-3 py-1.5 rounded-full font-bold text-right">
-                        {item.role}
-                      </span>
-                    </div>
-                    <div>
                       <h2 className="text-2xl font-black leading-tight text-white">{item.title}</h2>
-                    </div>
-                    <p className="text-slate-200 text-base leading-relaxed">{item.text}</p>
-                    <div className="text-sm text-cyan-100 bg-slate-950/60 rounded-2xl p-4 border border-cyan-300/20 leading-relaxed">
-                      <b>Przykład:</b> {item.example}
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            );
-          })}
-                  </div>
+                      <p className="text-slate-200 text-base leading-relaxed">{item.text}</p>
+                      <div className="text-sm text-cyan-100 bg-slate-950/60 rounded-2xl p-4 border border-cyan-300/20 leading-relaxed">
+                        <b>Przykład:</b> {item.example}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              );
+            })}
+          </div>
         </section>
 
         <section>
-          <SectionTitle icon={Sparkles} title="Interaktywne demo" subtitle="Tu kandydat może sam kliknąć, wpisać przykładowe hasło i sprawdzić kilka sytuacji z życia cyfrowego." />
+          <SectionTitle
+            icon={Sparkles}
+            title="Interaktywne demo"
+            subtitle="Każdy blok jest osobno, żeby przy stanowisku łatwo było pokazać jedną funkcję po drugiej."
+          />
           <div className="space-y-6">
-          <Card className="bg-white/[0.08] border-white/12 rounded-[1.7rem] shadow-xl backdrop-blur">
-            <CardContent className="p-6 md:p-7 space-y-5">
-              <SectionTitle icon={Lock} title="1. Test siły hasła" subtitle="Krótki pokaz: uczeń wpisuje przykładowe hasło i widzi, że dobre zabezpieczenia zaczynają się od podstaw." />
-              <input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-5 py-4 rounded-2xl bg-slate-950/80 border border-white/15 outline-none focus:border-cyan-300 text-white text-lg shadow-inner"
-                placeholder="Wpisz przykładowe hasło"
-              />
-              <div className="h-5 rounded-full bg-slate-900 overflow-hidden border border-white/10">
-                <motion.div className={`h-full ${passInfo.bg}`} animate={{ width: passInfo.width }} />
-              </div>
-              <div className="bg-slate-950/70 rounded-2xl p-5 border border-white/10 shadow-lg">
-                <p className={`font-black text-2xl ${passInfo.tone}`}>Ocena: {passInfo.label}</p>
-                <p className="text-slate-200 text-base mt-2 leading-relaxed">{passInfo.text}</p>
-              </div>
-            </CardContent>
-          </Card>
+            <Card className="bg-white/[0.08] border border-white/12 rounded-[1.7rem] shadow-xl backdrop-blur">
+              <CardContent className="p-6 md:p-7 space-y-5">
+                <SectionTitle
+                  icon={Lock}
+                  title="1. Test siły hasła"
+                  subtitle="Krótki pokaz: uczeń wpisuje przykładowe hasło i widzi, że dobre zabezpieczenia zaczynają się od podstaw."
+                />
+                <input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-5 py-4 rounded-2xl bg-slate-950/80 border border-white/15 outline-none focus:border-cyan-300 text-white text-lg shadow-inner"
+                  placeholder="Wpisz przykładowe hasło"
+                />
+                <div className="h-5 rounded-full bg-slate-900 overflow-hidden border border-white/10">
+                  <motion.div className={`h-full ${passInfo.bg}`} animate={{ width: passInfo.width }} />
+                </div>
+                <div className="bg-slate-950/70 rounded-2xl p-5 border border-white/10 shadow-lg">
+                  <p className={`font-black text-2xl ${passInfo.tone}`}>Ocena: {passInfo.label}</p>
+                  <p className="text-slate-200 text-base mt-2 leading-relaxed">{passInfo.text}</p>
+                </div>
+              </CardContent>
+            </Card>
 
-          <Card className="bg-white/[0.08] border-white/12 rounded-[1.7rem] shadow-xl backdrop-blur">
-            <CardContent className="p-6 md:p-7 space-y-5">
-              <SectionTitle icon={Bug} title="2. Analiza podejrzanych sytuacji" subtitle="Uczeń wybiera przykład, a aplikacja wyjaśnia, czy może to być phishing, błąd bezpieczeństwa albo zwykła sytuacja." />
-              <div className="grid md:grid-cols-2 gap-4">
-                {threats.map((item, index) => (
-                  <button
-                    key={item.label}
-                    onClick={() => setSelectedThreat(index)}
-                    className={`text-left rounded-2xl p-5 border transition shadow-lg min-h-[120px] ${selectedThreat === index ? "border-cyan-300 bg-cyan-400/15 ring-2 ring-cyan-300/20" : "border-white/10 bg-slate-950/60 hover:bg-slate-900"}`}
+            <Card className="bg-white/[0.08] border border-white/12 rounded-[1.7rem] shadow-xl backdrop-blur">
+              <CardContent className="p-6 md:p-7 space-y-5">
+                <SectionTitle
+                  icon={Bug}
+                  title="2. Analiza podejrzanych sytuacji"
+                  subtitle="Uczeń wybiera przykład, a aplikacja wyjaśnia, czy może to być phishing, błąd bezpieczeństwa albo zwykła sytuacja."
+                />
+                <div className="grid md:grid-cols-2 gap-4">
+                  {threats.map((item, index) => (
+                    <button
+                      key={item.label}
+                      type="button"
+                      onClick={() => setSelectedThreat(index)}
+                      className={`text-left rounded-2xl p-5 border transition shadow-lg min-h-[120px] ${
+                        selectedThreat === index
+                          ? "border-cyan-300 bg-cyan-400/15 ring-2 ring-cyan-300/20"
+                          : "border-white/10 bg-slate-950/60 hover:bg-slate-900"
+                      }`}
+                    >
+                      <div className="flex gap-3">
+                        <ArrowRight className="text-cyan-300 shrink-0 mt-1" size={20} />
+                        <p className="text-base md:text-lg text-slate-100 leading-relaxed font-medium">{item.label}</p>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+                {selectedThreat !== null && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="rounded-2xl p-5 bg-slate-950/80 border border-white/10 shadow-lg"
                   >
-                    <div className="flex gap-3">
-                      <ArrowRight className="text-cyan-300 shrink-0 mt-1" size={20} />
-                      <p className="text-base md:text-lg text-slate-100 leading-relaxed font-medium">{item.label}</p>
+                    <div
+                      className={`flex flex-wrap items-center gap-3 font-black text-xl md:text-2xl ${
+                        threats[selectedThreat].danger ? "text-rose-100" : "text-emerald-100"
+                      }`}
+                    >
+                      {threats[selectedThreat].danger ? (
+                        <AlertTriangle className="text-rose-200" size={30} />
+                      ) : (
+                        <CheckCircle2 className="text-emerald-200" size={30} />
+                      )}
+                      <span
+                        className={`px-3 py-2 rounded-xl ${
+                          threats[selectedThreat].danger
+                            ? "bg-rose-500/25 border border-rose-300/30"
+                            : "bg-emerald-500/25 border border-emerald-300/30"
+                        }`}
+                      >
+                        {threats[selectedThreat].danger
+                          ? "Podejrzane — wymaga ostrożności"
+                          : "Wygląda bezpieczniej — ale nadal warto sprawdzić szczegóły"}
+                      </span>
                     </div>
-                  </button>
-                ))}
-              </div>
-              {selectedThreat !== null && (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="rounded-2xl p-5 bg-slate-950/80 border border-white/10 shadow-lg">
-                  <div className={`flex items-center gap-3 font-black text-xl md:text-2xl ${threats[selectedThreat].danger ? "text-rose-100" : "text-emerald-100"}`}>
-                    {threats[selectedThreat].danger ? <AlertTriangle className="text-rose-200" size={30} /> : <CheckCircle2 className="text-emerald-200" size={30} />}
-                    <span className={`px-3 py-2 rounded-xl ${threats[selectedThreat].danger ? "bg-rose-500/25 border border-rose-300/30" : "bg-emerald-500/25 border border-emerald-300/30"}`}>
-                      {threats[selectedThreat].danger ? "Podejrzane — wymaga ostrożności" : "Wygląda bezpieczniej — ale nadal warto sprawdzić szczegóły"}
-                    </span>
-                  </div>
-                  <p className="text-slate-200 text-base md:text-lg mt-3 leading-relaxed">{threats[selectedThreat].reason}</p>
-                </motion.div>
-              )}
-            </CardContent>
-          </Card>
-                  </div>
+                    <p className="text-slate-200 text-base md:text-lg mt-3 leading-relaxed">{threats[selectedThreat].reason}</p>
+                  </motion.div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
         </section>
 
         <section className="grid lg:grid-cols-[1fr_1fr] gap-6">
-          <Card className="bg-white/[0.08] border-white/12 rounded-[1.7rem] shadow-xl backdrop-blur">
+          <Card className="bg-white/[0.08] border border-white/12 rounded-[1.7rem] shadow-xl backdrop-blur">
             <CardContent className="p-6 md:p-7 space-y-5">
-              <SectionTitle icon={Globe} title="Ułóż kolejność działania aplikacji" subtitle="Kandydat wybiera etapy w takiej kolejności, w jakiej najczęściej pracuje aplikacja internetowa." />
+              <SectionTitle
+                icon={Globe}
+                title="Ułóż kolejność działania aplikacji"
+                subtitle="Kandydat wybiera etapy w takiej kolejności, w jakiej najczęściej pracuje aplikacja internetowa."
+              />
               <div className="space-y-5">
                 <div className="grid sm:grid-cols-2 gap-3">
                   {workflowOptions.map((step) => {
@@ -344,9 +466,14 @@ export default function CyberInformatykShowcase() {
                     return (
                       <button
                         key={step.id}
+                        type="button"
                         onClick={() => addWorkflowStep(step.id)}
                         disabled={selected}
-                        className={`text-left rounded-2xl p-4 border transition shadow-lg min-h-[120px] ${selected ? "bg-slate-800/70 border-slate-600 text-slate-400 cursor-not-allowed" : "bg-slate-950/70 border-cyan-300/20 hover:bg-cyan-400/10 text-slate-100"}`}
+                        className={`text-left rounded-2xl p-4 border transition shadow-lg min-h-[120px] ${
+                          selected
+                            ? "bg-slate-800/70 border-slate-600 text-slate-400 cursor-not-allowed"
+                            : "bg-slate-950/70 border-cyan-300/20 hover:bg-cyan-400/10 text-slate-100"
+                        }`}
                       >
                         <p className="font-black text-xl text-cyan-100">{step.title}</p>
                         <p className="text-sm md:text-base mt-2 leading-relaxed">{step.text}</p>
@@ -365,7 +492,9 @@ export default function CyberInformatykShowcase() {
                         const step = workflowOptions.find((item) => item.id === id);
                         return (
                           <div key={id} className="flex items-center gap-3 rounded-xl bg-cyan-400/10 border border-cyan-300/20 px-4 py-3">
-                            <span className="w-8 h-8 rounded-full bg-cyan-300 text-slate-950 font-black flex items-center justify-center">{index + 1}</span>
+                            <span className="w-8 h-8 rounded-full bg-cyan-300 text-slate-950 font-black flex items-center justify-center">
+                              {index + 1}
+                            </span>
                             <span className="font-bold text-cyan-50">{step.title}</span>
                           </div>
                         );
@@ -375,19 +504,32 @@ export default function CyberInformatykShowcase() {
                 </div>
 
                 <div className="flex flex-wrap gap-3">
-                  <Button onClick={() => setShowWorkflowResult(true)} className="rounded-2xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black px-5 py-6 text-base shadow-lg shadow-cyan-500/20">
-                    <CheckCircle2 size={18} className="mr-2" /> Sprawdź kolejność
+                  <Button
+                    onClick={() => setShowWorkflowResult(true)}
+                    className="rounded-2xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black px-5 py-4 text-base shadow-lg shadow-cyan-500/20"
+                  >
+                    <CheckCircle2 size={18} className="mr-2 inline" /> Sprawdź kolejność
                   </Button>
-                  <Button onClick={resetWorkflow} className="rounded-2xl bg-slate-100 hover:bg-white text-slate-950 border-2 border-cyan-200 font-black px-5 py-6 text-base shadow-lg shadow-white/10">
-                    <RefreshCw size={18} className="mr-2 text-slate-950" /> Ułóż od nowa
+                  <Button
+                    onClick={resetWorkflow}
+                    className="rounded-2xl bg-slate-100 hover:bg-white text-slate-950 border-2 border-cyan-200 font-black px-5 py-4 text-base shadow-lg shadow-white/10"
+                  >
+                    <RefreshCw size={18} className="mr-2 inline text-slate-950" /> Ułóż od nowa
                   </Button>
                 </div>
 
                 {showWorkflowResult && (
-                  <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} className={`rounded-2xl p-5 border shadow-lg ${isWorkflowCorrect ? "bg-emerald-400/15 border-emerald-300/30" : "bg-amber-400/15 border-amber-300/30"}`}>
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.96 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className={`rounded-2xl p-5 border shadow-lg ${
+                      isWorkflowCorrect ? "bg-emerald-400/15 border-emerald-300/30" : "bg-amber-400/15 border-amber-300/30"
+                    }`}
+                  >
                     <p className="text-2xl font-black text-white">{isWorkflowCorrect ? "Dobra kolejność!" : "Prawie! Spróbuj jeszcze raz."}</p>
                     <p className="text-slate-200 text-base md:text-lg mt-2 leading-relaxed">
-                      Poprawny schemat: frontend → backend → baza danych → cyberbezpieczeństwo. Najpierw użytkownik coś widzi i wpisuje, potem kod to przetwarza, dane trafiają do bazy, a na każdym etapie trzeba myśleć o bezpieczeństwie.
+                      Poprawny schemat: frontend → backend → baza danych → cyberbezpieczeństwo. Najpierw użytkownik coś widzi i wpisuje,
+                      potem kod to przetwarza, dane trafiają do bazy, a na każdym etapie trzeba myśleć o bezpieczeństwie.
                     </p>
                   </motion.div>
                 )}
@@ -395,9 +537,13 @@ export default function CyberInformatykShowcase() {
             </CardContent>
           </Card>
 
-          <Card className="bg-white/[0.08] border-white/12 rounded-[1.7rem] shadow-xl backdrop-blur">
+          <Card className="bg-white/[0.08] border border-white/12 rounded-[1.7rem] shadow-xl backdrop-blur">
             <CardContent className="p-6 md:p-7 space-y-5">
-              <SectionTitle icon={Trophy} title="3. Quiz: pomyśl jak informatyk i cyber" subtitle="Kilka pytań sprawdza, czy kandydat rozumie podstawowe decyzje programisty i specjalisty od cyberbezpieczeństwa." />
+              <SectionTitle
+                icon={Trophy}
+                title="3. Quiz: pomyśl jak informatyk i cyber"
+                subtitle="Kilka pytań sprawdza, czy kandydat rozumie podstawowe decyzje programisty i specjalisty od cyberbezpieczeństwa."
+              />
               <div className="space-y-5">
                 {quiz.map((item, qIndex) => (
                   <div key={item.question} className="rounded-2xl bg-slate-950/70 border border-white/10 p-5 shadow-lg">
@@ -412,8 +558,17 @@ export default function CyberInformatykShowcase() {
                         return (
                           <button
                             key={answer}
+                            type="button"
                             onClick={() => setAnswers({ ...answers, [qIndex]: aIndex })}
-                            className={`rounded-xl p-4 text-left text-base border transition font-medium min-h-[72px] ${isCorrect ? "bg-emerald-400/20 border-emerald-300 text-emerald-50" : isWrong ? "bg-rose-400/20 border-rose-300 text-rose-50" : selected ? "bg-cyan-400/20 border-cyan-300 text-cyan-50" : "bg-slate-900 border-white/10 hover:bg-slate-800 text-slate-100"}`}
+                            className={`rounded-xl p-4 text-left text-base border transition font-medium min-h-[72px] ${
+                              isCorrect
+                                ? "bg-emerald-400/20 border-emerald-300 text-emerald-50"
+                                : isWrong
+                                ? "bg-rose-400/20 border-rose-300 text-rose-50"
+                                : selected
+                                ? "bg-cyan-400/20 border-cyan-300 text-cyan-50"
+                                : "bg-slate-900 border-white/10 hover:bg-slate-800 text-slate-100"
+                            }`}
                           >
                             {answer}
                           </button>
@@ -424,17 +579,32 @@ export default function CyberInformatykShowcase() {
                 ))}
               </div>
               <div className="flex flex-wrap gap-3">
-                <Button onClick={() => setShowScore(true)} className="rounded-2xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black px-5 py-6 text-base shadow-lg shadow-cyan-500/20">
-                  <Play size={18} className="mr-2" /> Pokaż wynik
+                <Button
+                  onClick={() => setShowScore(true)}
+                  className="rounded-2xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black px-5 py-4 text-base shadow-lg shadow-cyan-500/20"
+                >
+                  <Play size={18} className="mr-2 inline" /> Pokaż wynik
                 </Button>
-                <Button onClick={() => { setAnswers({}); setShowScore(false); }} className="rounded-2xl bg-slate-100 hover:bg-white text-slate-950 border-2 border-cyan-200 font-black px-5 py-6 text-base shadow-lg shadow-white/10">
-                  <RefreshCw size={18} className="mr-2 text-slate-950" /> Wyczyść odpowiedzi
+                <Button
+                  onClick={() => {
+                    setAnswers({});
+                    setShowScore(false);
+                  }}
+                  className="rounded-2xl bg-slate-100 hover:bg-white text-slate-950 border-2 border-cyan-200 font-black px-5 py-4 text-base shadow-lg shadow-white/10"
+                >
+                  <RefreshCw size={18} className="mr-2 inline text-slate-950" /> Wyczyść odpowiedzi
                 </Button>
               </div>
               {showScore && (
-                <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} className="rounded-2xl p-6 bg-cyan-400/15 border border-cyan-300/30 shadow-lg">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="rounded-2xl p-6 bg-cyan-400/15 border border-cyan-300/30 shadow-lg"
+                >
                   <p className="text-3xl font-black text-white">Wynik: {quizScore}/{quiz.length}</p>
-                  <p className="text-slate-200 text-base md:text-lg mt-2 leading-relaxed">To dobry moment, żeby zaprosić ucznia do rozmowy o kierunku i pokazać, że technologia to praktyka, nie sama teoria.</p>
+                  <p className="text-slate-200 text-base md:text-lg mt-2 leading-relaxed">
+                    To dobry moment, żeby zaprosić ucznia do rozmowy o kierunku i pokazać, że technologia to praktyka, nie sama teoria.
+                  </p>
                 </motion.div>
               )}
             </CardContent>
