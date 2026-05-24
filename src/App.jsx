@@ -1,37 +1,55 @@
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Shield, Code2, Database, Globe, Lock, Terminal, Bug, CheckCircle2, AlertTriangle, Trophy, Play, RefreshCw, ArrowRight, Sparkles } from "lucide-react";
-import { Card, CardContent } from "./components/ui/card";
-import { Button } from "./components/ui/button";
+import { Shield, Code2, Database, Globe, Lock, Terminal, Bug, Cpu, CheckCircle2, AlertTriangle, Trophy, Play, RefreshCw, ArrowRight, Sparkles } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const modules = [
   {
     icon: Code2,
-    title: "Programowanie aplikacji",
+    title: "Tworzy aplikacje i strony",
     role: "Technik informatyk",
-    text: "Tworzy strony WWW, formularze, aplikacje i skrypty, które przetwarzają dane użytkowników.",
-    example: "HTML + CSS + JavaScript + PHP",
+    text: "Pisze kod, buduje formularze, panele użytkownika, strony WWW i proste aplikacje internetowe.",
+    example: "HTML, CSS, JavaScript, PHP",
   },
   {
     icon: Database,
-    title: "Bazy danych",
+    title: "Pracuje z danymi",
     role: "Technik informatyk",
-    text: "Projektuje tabele, zapisuje dane, tworzy zapytania SQL i łączy aplikację z bazą.",
-    example: "SELECT, INSERT, JOIN, MySQL",
+    text: "Projektuje bazy danych, zapisuje informacje i pobiera je za pomocą zapytań SQL.",
+    example: "MySQL, tabele, SELECT, INSERT, JOIN",
   },
   {
     icon: Shield,
-    title: "Bezpieczeństwo aplikacji",
+    title: "Chroni aplikacje i użytkowników",
     role: "Technik cyberbezpieczeństwa",
-    text: "Sprawdza, czy aplikacja jest odporna na błędy, wycieki danych i próby ataku.",
-    example: "walidacja, hasła, logi, podatności",
+    text: "Sprawdza, czy dane są bezpieczne, hasła właściwie chronione, a formularze odporne na błędy i ataki.",
+    example: "bezpieczne logowanie, walidacja, ochrona danych",
   },
   {
     icon: Terminal,
-    title: "Analiza incydentów",
+    title: "Analizuje zagrożenia",
     role: "Technik cyberbezpieczeństwa",
-    text: "Analizuje podejrzane logi, wiadomości, adresy URL i zachowanie użytkowników.",
-    example: "phishing, malware, ataki na konta",
+    text: "Rozpoznaje phishing, podejrzane linki, błędne konfiguracje i sytuacje, które mogą prowadzić do wycieku danych.",
+    example: "phishing, logi, incydenty, analiza ryzyka",
+  },
+];
+
+const steps = [
+  {
+    number: "01",
+    title: "Użytkownik wpisuje dane",
+    text: "Na przykład w formularzu kontaktowym, logowaniu albo quizie.",
+  },
+  {
+    number: "02",
+    title: "Aplikacja przetwarza informacje",
+    text: "Kod sprawdza dane, wykonuje operacje i może połączyć się z bazą.",
+  },
+  {
+    number: "03",
+    title: "Cyber sprawdza bezpieczeństwo",
+    text: "Czy dane są chronione, czy link jest prawdziwy i czy aplikacja nie ma podatności.",
   },
 ];
 
@@ -61,18 +79,18 @@ const threats = [
 const quiz = [
   {
     question: "Użytkownik wpisuje dane w formularzu kontaktowym. Co powinien zrobić programista przed zapisaniem ich do bazy?",
-    answers: ["Sprawdzić poprawność danych i ograniczyć niebezpieczne znaki", "Zapisać wszystko bez sprawdzania, bo formularz jest na stronie", "Ukryć formularz po kliknięciu przycisku", "Zmienić wygląd pola tekstowego, żeby wyglądało bezpiecznie"],
-    correct: 0,
+    answers: ["Zapisać wszystko bez sprawdzania, bo formularz jest na stronie", "Sprawdzić poprawność danych i ograniczyć niebezpieczne znaki", "Ukryć formularz po kliknięciu przycisku", "Zmienić wygląd pola tekstowego, żeby wyglądało bezpiecznie"],
+    correct: 1,
   },
   {
     question: "Uczeń otrzymuje link do „darmowej nagrody”, który prowadzi do dziwnej domeny. Co najlepiej pokazuje pracę cyberbezpieczeństwa?",
-    answers: ["Sprawdzenie adresu strony, treści wiadomości i ryzyka phishingu", "Ocena, czy grafika w wiadomości jest estetyczna", "Kliknięcie linku, żeby szybciej zobaczyć nagrodę", "Przesłanie linku wszystkim znajomym do testu"],
-    correct: 0,
+    answers: ["Ocena, czy grafika w wiadomości jest estetyczna", "Kliknięcie linku, żeby szybciej zobaczyć nagrodę", "Sprawdzenie adresu strony, treści wiadomości i ryzyka phishingu", "Przesłanie linku wszystkim znajomym do testu"],
+    correct: 2,
   },
   {
     question: "Aplikacja ma wyświetlić listę uczniów zapisanych w bazie. Która technologia będzie tu najbardziej potrzebna?",
-    answers: ["SQL, bo pozwala pobierać i filtrować dane z tabel", "CSS, bo szyfruje dane w bazie", "PNG, bo przechowuje hasła użytkowników", "Bluetooth, bo sortuje rekordy w tabeli"],
-    correct: 0,
+    answers: ["CSS, bo szyfruje dane w bazie", "PNG, bo przechowuje hasła użytkowników", "Bluetooth, bo sortuje rekordy w tabeli", "SQL, bo pozwala pobierać i filtrować dane z tabel"],
+    correct: 3,
   },
 ];
 
@@ -122,8 +140,8 @@ export default function CyberInformatykShowcase() {
 
   const terminalLines = [
     "> start: aplikacja pokazowa ZSTK",
-    "> technik informatyk: kod + aplikacje + bazy danych",
-    "> technik cyberbezpieczeństwa: analiza + ochrona + reagowanie",
+    "> temat: programowanie + bazy danych + cyberbezpieczeństwo",
+    "> cel: pokaż kandydatowi, że technologia to praktyka",
     "> status: gotowe do prezentacji",
   ];
 
@@ -133,7 +151,11 @@ export default function CyberInformatykShowcase() {
       <div className="fixed inset-0 opacity-[0.07] bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:38px_38px]" />
 
       <div className="relative max-w-7xl mx-auto space-y-8">
-        <motion.header initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="grid lg:grid-cols-[1.35fr_.65fr] gap-6 items-stretch">
+        <motion.header
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="grid lg:grid-cols-[1.35fr_.65fr] gap-6 items-stretch"
+        >
           <div className="rounded-[2rem] border border-white/10 bg-white/[0.07] backdrop-blur-xl p-6 md:p-9 shadow-2xl">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-400/15 border border-cyan-300/40 text-cyan-100 text-sm md:text-base font-semibold mb-5 shadow-lg shadow-cyan-500/10">
               <Sparkles size={18} /> ZSTK Lublin — interaktywny pokaz kierunków
@@ -142,10 +164,10 @@ export default function CyberInformatykShowcase() {
               Cyberbezpieczeństwo <span className="text-cyan-300">+</span><br /> Informatyka
             </h1>
             <p className="text-slate-200 text-lg md:text-2xl mt-5 max-w-4xl leading-relaxed">
-              Krótka aplikacja pokazująca, jak <b className="text-white">programowanie</b>, <b className="text-white">bazy danych</b> i <b className="text-white">ochrona przed zagrożeniami</b> łączą się w praktyce.
+              Jedna aplikacja pokazuje dwie ścieżki: <b className="text-white">informatyk tworzy rozwiązania</b>, a <b className="text-white">cyberbezpieczeństwo sprawdza, czy są bezpieczne</b>.
             </p>
             <div className="flex flex-wrap gap-3 mt-7">
-              {['kod', 'baza danych', 'formularze', 'hasła', 'phishing', 'bezpieczeństwo'].map((tag) => (
+              {['programowanie', 'bazy danych', 'formularze', 'hasła', 'phishing', 'ochrona danych'].map((tag) => (
                 <span key={tag} className="px-4 py-2 rounded-full bg-slate-900/70 border border-white/10 text-slate-100 text-sm md:text-base font-medium">
                   #{tag}
                 </span>
@@ -172,7 +194,21 @@ export default function CyberInformatykShowcase() {
           </Card>
         </motion.header>
 
-        <section className="grid md:grid-cols-2 xl:grid-cols-4 gap-5">
+        <section className="grid md:grid-cols-3 gap-5">
+          {steps.map((step) => (
+            <Card key={step.number} className="bg-white/[0.08] border-white/12 rounded-[1.7rem] shadow-xl backdrop-blur">
+              <CardContent className="p-6 space-y-3">
+                <div className="text-4xl font-black text-cyan-300">{step.number}</div>
+                <h2 className="text-2xl font-black text-white leading-tight">{step.title}</h2>
+                <p className="text-slate-200 text-base md:text-lg leading-relaxed">{step.text}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </section>
+
+        <section>
+          <SectionTitle icon={Cpu} title="Co pokazuje ta aplikacja?" subtitle="Cztery krótkie obszary, które kandydat może szybko skojarzyć z nauką na kierunkach technicznych." />
+          <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-5">
           {modules.map((item, index) => {
             const Icon = item.icon;
             return (
@@ -187,7 +223,9 @@ export default function CyberInformatykShowcase() {
                         {item.role}
                       </span>
                     </div>
-                    <h2 className="text-2xl font-black leading-tight text-white">{item.title}</h2>
+                    <div>
+                      <h2 className="text-2xl font-black leading-tight text-white">{item.title}</h2>
+                    </div>
                     <p className="text-slate-200 text-base leading-relaxed">{item.text}</p>
                     <div className="text-sm text-cyan-100 bg-slate-950/60 rounded-2xl p-4 border border-cyan-300/20 leading-relaxed">
                       <b>Przykład:</b> {item.example}
@@ -197,13 +235,21 @@ export default function CyberInformatykShowcase() {
               </motion.div>
             );
           })}
+                  </div>
         </section>
 
-        <section className="grid lg:grid-cols-3 gap-6">
+        <section>
+          <SectionTitle icon={Sparkles} title="Interaktywne demo" subtitle="Tu kandydat może sam kliknąć, wpisać przykładowe hasło i sprawdzić kilka sytuacji z życia cyfrowego." />
+          <div className="grid lg:grid-cols-3 gap-6">
           <Card className="bg-white/[0.08] border-white/12 rounded-[1.7rem] shadow-xl lg:col-span-1 backdrop-blur">
             <CardContent className="p-6 md:p-7 space-y-5">
-              <SectionTitle icon={Lock} title="Mini laboratorium hasła" subtitle="Uczeń wpisuje przykładowe hasło i od razu widzi, dlaczego długość oraz różnorodność znaków mają znaczenie." />
-              <input value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-5 py-4 rounded-2xl bg-slate-950/80 border border-white/15 outline-none focus:border-cyan-300 text-white text-lg shadow-inner" placeholder="Wpisz przykładowe hasło" />
+              <SectionTitle icon={Lock} title="1. Test siły hasła" subtitle="Krótki pokaz: uczeń wpisuje przykładowe hasło i widzi, że dobre zabezpieczenia zaczynają się od podstaw." />
+              <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-5 py-4 rounded-2xl bg-slate-950/80 border border-white/15 outline-none focus:border-cyan-300 text-white text-lg shadow-inner"
+                placeholder="Wpisz przykładowe hasło"
+              />
               <div className="h-5 rounded-full bg-slate-900 overflow-hidden border border-white/10">
                 <motion.div className={`h-full ${passInfo.bg}`} animate={{ width: passInfo.width }} />
               </div>
@@ -216,10 +262,14 @@ export default function CyberInformatykShowcase() {
 
           <Card className="bg-white/[0.08] border-white/12 rounded-[1.7rem] shadow-xl lg:col-span-2 backdrop-blur">
             <CardContent className="p-6 md:p-7 space-y-5">
-              <SectionTitle icon={Bug} title="Analizator zagrożeń" subtitle="Kandydat klika przykład, a aplikacja pokazuje, czy sytuacja wygląda podejrzanie i dlaczego." />
+              <SectionTitle icon={Bug} title="2. Analiza podejrzanych sytuacji" subtitle="Uczeń wybiera przykład, a aplikacja wyjaśnia, czy może to być phishing, błąd bezpieczeństwa albo zwykła sytuacja." />
               <div className="grid md:grid-cols-2 gap-4">
                 {threats.map((item, index) => (
-                  <button key={item.label} onClick={() => setSelectedThreat(index)} className={`text-left rounded-2xl p-5 border transition shadow-lg min-h-[120px] ${selectedThreat === index ? "border-cyan-300 bg-cyan-400/15 ring-2 ring-cyan-300/20" : "border-white/10 bg-slate-950/60 hover:bg-slate-900"}`}>
+                  <button
+                    key={item.label}
+                    onClick={() => setSelectedThreat(index)}
+                    className={`text-left rounded-2xl p-5 border transition shadow-lg min-h-[120px] ${selectedThreat === index ? "border-cyan-300 bg-cyan-400/15 ring-2 ring-cyan-300/20" : "border-white/10 bg-slate-950/60 hover:bg-slate-900"}`}
+                  >
                     <div className="flex gap-3">
                       <ArrowRight className="text-cyan-300 shrink-0 mt-1" size={20} />
                       <p className="text-base md:text-lg text-slate-100 leading-relaxed font-medium">{item.label}</p>
@@ -240,24 +290,25 @@ export default function CyberInformatykShowcase() {
               )}
             </CardContent>
           </Card>
+                  </div>
         </section>
 
         <section className="grid lg:grid-cols-[.9fr_1.1fr] gap-6">
           <Card className="bg-white/[0.08] border-white/12 rounded-[1.7rem] shadow-xl backdrop-blur">
             <CardContent className="p-6 md:p-7 space-y-5">
-              <SectionTitle icon={Globe} title="Jak działa aplikacja?" subtitle="Prosty schemat pokazuje, że informatyka i cyberbezpieczeństwo spotykają się w każdym prawdziwym projekcie." />
+              <SectionTitle icon={Globe} title="Od pomysłu do bezpiecznej aplikacji" subtitle="Ten blok porządkuje cały przekaz: najpierw tworzymy aplikację, potem dbamy o dane i bezpieczeństwo użytkowników." />
               <div className="space-y-4 text-base md:text-lg text-slate-200">
-                <div className="p-5 rounded-2xl bg-slate-950/70 border border-white/10 shadow-lg"><b className="text-white">1. Frontend:</b> uczeń widzi formularz, przyciski i wynik działania aplikacji.</div>
-                <div className="p-5 rounded-2xl bg-slate-950/70 border border-white/10 shadow-lg"><b className="text-white">2. Backend:</b> skrypt przetwarza dane i komunikuje się z bazą.</div>
-                <div className="p-5 rounded-2xl bg-slate-950/70 border border-white/10 shadow-lg"><b className="text-white">3. Baza danych:</b> przechowuje konta, wyniki, zgłoszenia lub produkty.</div>
-                <div className="p-5 rounded-2xl bg-slate-950/70 border border-white/10 shadow-lg"><b className="text-white">4. Cyber:</b> zabezpiecza logowanie, hasła, formularze i dane użytkowników.</div>
+                <div className="p-5 rounded-2xl bg-slate-950/70 border border-white/10 shadow-lg"><b className="text-white">Frontend:</b> to część, którą widzi użytkownik — przyciski, formularze, komunikaty i wygląd strony.</div>
+                <div className="p-5 rounded-2xl bg-slate-950/70 border border-white/10 shadow-lg"><b className="text-white">Backend:</b> to logika aplikacji — przetwarzanie formularzy, sprawdzanie danych i wykonywanie operacji.</div>
+                <div className="p-5 rounded-2xl bg-slate-950/70 border border-white/10 shadow-lg"><b className="text-white">Baza danych:</b> przechowuje informacje, na przykład konta, wyniki, zgłoszenia albo listę produktów.</div>
+                <div className="p-5 rounded-2xl bg-slate-950/70 border border-white/10 shadow-lg"><b className="text-white">Cyberbezpieczeństwo:</b> sprawdza, czy aplikacja chroni dane i nie ułatwia ataku.</div>
               </div>
             </CardContent>
           </Card>
 
           <Card className="bg-white/[0.08] border-white/12 rounded-[1.7rem] shadow-xl backdrop-blur">
             <CardContent className="p-6 md:p-7 space-y-5">
-              <SectionTitle icon={Trophy} title="Szybki quiz dla kandydata" subtitle="Krótka aktywność, która zatrzymuje ucznia przy stanowisku i daje pretekst do rozmowy o kierunku." />
+              <SectionTitle icon={Trophy} title="3. Quiz: pomyśl jak informatyk i cyber" subtitle="Kilka pytań sprawdza, czy kandydat rozumie podstawowe decyzje programisty i specjalisty od cyberbezpieczeństwa." />
               <div className="space-y-5">
                 {quiz.map((item, qIndex) => (
                   <div key={item.question} className="rounded-2xl bg-slate-950/70 border border-white/10 p-5 shadow-lg">
@@ -270,7 +321,11 @@ export default function CyberInformatykShowcase() {
                         const isCorrect = showScore && aIndex === item.correct;
                         const isWrong = showScore && selected && aIndex !== item.correct;
                         return (
-                          <button key={answer} onClick={() => setAnswers({ ...answers, [qIndex]: aIndex })} className={`rounded-xl p-4 text-left text-base border transition font-medium min-h-[72px] ${isCorrect ? "bg-emerald-400/20 border-emerald-300 text-emerald-50" : isWrong ? "bg-rose-400/20 border-rose-300 text-rose-50" : selected ? "bg-cyan-400/20 border-cyan-300 text-cyan-50" : "bg-slate-900 border-white/10 hover:bg-slate-800 text-slate-100"}`}>
+                          <button
+                            key={answer}
+                            onClick={() => setAnswers({ ...answers, [qIndex]: aIndex })}
+                            className={`rounded-xl p-4 text-left text-base border transition font-medium min-h-[72px] ${isCorrect ? "bg-emerald-400/20 border-emerald-300 text-emerald-50" : isWrong ? "bg-rose-400/20 border-rose-300 text-rose-50" : selected ? "bg-cyan-400/20 border-cyan-300 text-cyan-50" : "bg-slate-900 border-white/10 hover:bg-slate-800 text-slate-100"}`}
+                          >
                             {answer}
                           </button>
                         );
@@ -298,7 +353,7 @@ export default function CyberInformatykShowcase() {
         </section>
 
         <footer className="text-center text-slate-200 text-lg md:text-xl py-6 rounded-[1.7rem] bg-white/[0.06] border border-white/10 shadow-xl">
-          <b>Technik informatyk</b> tworzy rozwiązania. <b>Technik cyberbezpieczeństwa</b> pomaga je zabezpieczać. Razem tworzą świat nowoczesnych technologii.
+          <b>Najprościej:</b> informatyk buduje aplikacje, cyberbezpieczeństwo je chroni, a programowanie łączy oba światy.
         </footer>
       </div>
     </div>
