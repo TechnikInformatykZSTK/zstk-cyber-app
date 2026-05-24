@@ -94,6 +94,31 @@ const quiz = [
   },
 ];
 
+const workflowOptions = [
+  {
+    id: "frontend",
+    title: "Frontend",
+    text: "Użytkownik widzi formularz, przyciski i komunikaty na stronie.",
+  },
+  {
+    id: "backend",
+    title: "Backend",
+    text: "Kod sprawdza dane, wykonuje operacje i przygotowuje odpowiedź aplikacji.",
+  },
+  {
+    id: "database",
+    title: "Baza danych",
+    text: "Dane są zapisywane, pobierane albo filtrowane za pomocą zapytań.",
+  },
+  {
+    id: "security",
+    title: "Cyberbezpieczeństwo",
+    text: "Sprawdzamy, czy dane są chronione, a aplikacja nie ułatwia ataku.",
+  },
+];
+
+const correctWorkflow = ["frontend", "backend", "database", "security"];
+
 function calculatePasswordScore(password) {
   let score = 0;
   if (password.length >= 8) score++;
@@ -130,6 +155,8 @@ export default function CyberInformatykShowcase() {
   const [selectedThreat, setSelectedThreat] = useState(null);
   const [answers, setAnswers] = useState({});
   const [showScore, setShowScore] = useState(false);
+  const [workflowOrder, setWorkflowOrder] = useState([]);
+  const [showWorkflowResult, setShowWorkflowResult] = useState(false);
 
   const score = calculatePasswordScore(password);
   const passInfo = passwordMessage(score);
@@ -137,6 +164,19 @@ export default function CyberInformatykShowcase() {
   const quizScore = useMemo(() => {
     return quiz.reduce((sum, item, index) => sum + (answers[index] === item.correct ? 1 : 0), 0);
   }, [answers]);
+
+  const isWorkflowCorrect = workflowOrder.length === correctWorkflow.length && workflowOrder.every((id, index) => id === correctWorkflow[index]);
+
+  function addWorkflowStep(id) {
+    if (workflowOrder.includes(id)) return;
+    setWorkflowOrder([...workflowOrder, id]);
+    setShowWorkflowResult(false);
+  }
+
+  function resetWorkflow() {
+    setWorkflowOrder([]);
+    setShowWorkflowResult(false);
+  }
 
   const terminalLines = [
     "> start: aplikacja pokazowa ZSTK",
@@ -240,8 +280,8 @@ export default function CyberInformatykShowcase() {
 
         <section>
           <SectionTitle icon={Sparkles} title="Interaktywne demo" subtitle="Tu kandydat może sam kliknąć, wpisać przykładowe hasło i sprawdzić kilka sytuacji z życia cyfrowego." />
-          <div className="grid lg:grid-cols-3 gap-6">
-          <Card className="bg-white/[0.08] border-white/12 rounded-[1.7rem] shadow-xl lg:col-span-1 backdrop-blur">
+          <div className="space-y-6">
+          <Card className="bg-white/[0.08] border-white/12 rounded-[1.7rem] shadow-xl backdrop-blur">
             <CardContent className="p-6 md:p-7 space-y-5">
               <SectionTitle icon={Lock} title="1. Test siły hasła" subtitle="Krótki pokaz: uczeń wpisuje przykładowe hasło i widzi, że dobre zabezpieczenia zaczynają się od podstaw." />
               <input
@@ -260,7 +300,7 @@ export default function CyberInformatykShowcase() {
             </CardContent>
           </Card>
 
-          <Card className="bg-white/[0.08] border-white/12 rounded-[1.7rem] shadow-xl lg:col-span-2 backdrop-blur">
+          <Card className="bg-white/[0.08] border-white/12 rounded-[1.7rem] shadow-xl backdrop-blur">
             <CardContent className="p-6 md:p-7 space-y-5">
               <SectionTitle icon={Bug} title="2. Analiza podejrzanych sytuacji" subtitle="Uczeń wybiera przykład, a aplikacja wyjaśnia, czy może to być phishing, błąd bezpieczeństwa albo zwykła sytuacja." />
               <div className="grid md:grid-cols-2 gap-4">
@@ -293,15 +333,64 @@ export default function CyberInformatykShowcase() {
                   </div>
         </section>
 
-        <section className="grid lg:grid-cols-[.9fr_1.1fr] gap-6">
+        <section className="grid lg:grid-cols-[1fr_1fr] gap-6">
           <Card className="bg-white/[0.08] border-white/12 rounded-[1.7rem] shadow-xl backdrop-blur">
             <CardContent className="p-6 md:p-7 space-y-5">
-              <SectionTitle icon={Globe} title="Od pomysłu do bezpiecznej aplikacji" subtitle="Ten blok porządkuje cały przekaz: najpierw tworzymy aplikację, potem dbamy o dane i bezpieczeństwo użytkowników." />
-              <div className="space-y-4 text-base md:text-lg text-slate-200">
-                <div className="p-5 rounded-2xl bg-slate-950/70 border border-white/10 shadow-lg"><b className="text-white">Frontend:</b> to część, którą widzi użytkownik — przyciski, formularze, komunikaty i wygląd strony.</div>
-                <div className="p-5 rounded-2xl bg-slate-950/70 border border-white/10 shadow-lg"><b className="text-white">Backend:</b> to logika aplikacji — przetwarzanie formularzy, sprawdzanie danych i wykonywanie operacji.</div>
-                <div className="p-5 rounded-2xl bg-slate-950/70 border border-white/10 shadow-lg"><b className="text-white">Baza danych:</b> przechowuje informacje, na przykład konta, wyniki, zgłoszenia albo listę produktów.</div>
-                <div className="p-5 rounded-2xl bg-slate-950/70 border border-white/10 shadow-lg"><b className="text-white">Cyberbezpieczeństwo:</b> sprawdza, czy aplikacja chroni dane i nie ułatwia ataku.</div>
+              <SectionTitle icon={Globe} title="Ułóż kolejność działania aplikacji" subtitle="Kandydat wybiera etapy w takiej kolejności, w jakiej najczęściej pracuje aplikacja internetowa." />
+              <div className="space-y-5">
+                <div className="grid sm:grid-cols-2 gap-3">
+                  {workflowOptions.map((step) => {
+                    const selected = workflowOrder.includes(step.id);
+                    return (
+                      <button
+                        key={step.id}
+                        onClick={() => addWorkflowStep(step.id)}
+                        disabled={selected}
+                        className={`text-left rounded-2xl p-4 border transition shadow-lg min-h-[120px] ${selected ? "bg-slate-800/70 border-slate-600 text-slate-400 cursor-not-allowed" : "bg-slate-950/70 border-cyan-300/20 hover:bg-cyan-400/10 text-slate-100"}`}
+                      >
+                        <p className="font-black text-xl text-cyan-100">{step.title}</p>
+                        <p className="text-sm md:text-base mt-2 leading-relaxed">{step.text}</p>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div className="rounded-2xl p-5 bg-slate-950/70 border border-white/10 shadow-lg">
+                  <p className="font-black text-lg text-white mb-3">Wybrana kolejność:</p>
+                  {workflowOrder.length === 0 ? (
+                    <p className="text-slate-300">Kliknij pierwszy etap, od którego zaczyna się działanie aplikacji.</p>
+                  ) : (
+                    <div className="space-y-2">
+                      {workflowOrder.map((id, index) => {
+                        const step = workflowOptions.find((item) => item.id === id);
+                        return (
+                          <div key={id} className="flex items-center gap-3 rounded-xl bg-cyan-400/10 border border-cyan-300/20 px-4 py-3">
+                            <span className="w-8 h-8 rounded-full bg-cyan-300 text-slate-950 font-black flex items-center justify-center">{index + 1}</span>
+                            <span className="font-bold text-cyan-50">{step.title}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex flex-wrap gap-3">
+                  <Button onClick={() => setShowWorkflowResult(true)} className="rounded-2xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black px-5 py-6 text-base shadow-lg shadow-cyan-500/20">
+                    <CheckCircle2 size={18} className="mr-2" /> Sprawdź kolejność
+                  </Button>
+                  <Button onClick={resetWorkflow} className="rounded-2xl bg-slate-100 hover:bg-white text-slate-950 border-2 border-cyan-200 font-black px-5 py-6 text-base shadow-lg shadow-white/10">
+                    <RefreshCw size={18} className="mr-2 text-slate-950" /> Ułóż od nowa
+                  </Button>
+                </div>
+
+                {showWorkflowResult && (
+                  <motion.div initial={{ opacity: 0, scale: 0.96 }} animate={{ opacity: 1, scale: 1 }} className={`rounded-2xl p-5 border shadow-lg ${isWorkflowCorrect ? "bg-emerald-400/15 border-emerald-300/30" : "bg-amber-400/15 border-amber-300/30"}`}>
+                    <p className="text-2xl font-black text-white">{isWorkflowCorrect ? "Dobra kolejność!" : "Prawie! Spróbuj jeszcze raz."}</p>
+                    <p className="text-slate-200 text-base md:text-lg mt-2 leading-relaxed">
+                      Poprawny schemat: frontend → backend → baza danych → cyberbezpieczeństwo. Najpierw użytkownik coś widzi i wpisuje, potem kod to przetwarza, dane trafiają do bazy, a na każdym etapie trzeba myśleć o bezpieczeństwie.
+                    </p>
+                  </motion.div>
+                )}
               </div>
             </CardContent>
           </Card>
