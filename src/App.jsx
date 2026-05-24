@@ -141,16 +141,6 @@ const quiz = [
 
 const workflowOptions = [
   {
-    id: "frontend",
-    title: "Frontend",
-    text: "Użytkownik widzi formularz, przyciski i komunikaty na stronie.",
-  },
-  {
-    id: "backend",
-    title: "Backend",
-    text: "Kod sprawdza dane, wykonuje operacje i przygotowuje odpowiedź aplikacji.",
-  },
-  {
     id: "database",
     title: "Baza danych",
     text: "Dane są zapisywane, pobierane albo filtrowane za pomocą zapytań.",
@@ -159,6 +149,16 @@ const workflowOptions = [
     id: "security",
     title: "Cyberbezpieczeństwo",
     text: "Sprawdzamy, czy dane są chronione, a aplikacja nie ułatwia ataku.",
+  },
+  {
+    id: "frontend",
+    title: "Frontend",
+    text: "Użytkownik widzi formularz, przyciski i komunikaty na stronie.",
+  },
+  {
+    id: "backend",
+    title: "Backend",
+    text: "Kod sprawdza dane, wykonuje operacje i przygotowuje odpowiedź aplikacji.",
   },
 ];
 
