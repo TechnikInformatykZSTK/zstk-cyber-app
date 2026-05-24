@@ -451,7 +451,7 @@ export default function CyberInformatykShowcase() {
           </div>
         </section>
 
-        <section className="grid lg:grid-cols-[1fr_1fr] gap-6">
+        <section className="space-y-6">
           <Card className="bg-white/[0.08] border border-white/12 rounded-[1.7rem] shadow-xl backdrop-blur">
             <CardContent className="p-6 md:p-7 space-y-5">
               <SectionTitle
